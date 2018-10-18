@@ -1,4 +1,4 @@
-# XEVOQ_CALCULATOR
+# Svestkovka.cz interactive map
 
 ## cd into folder /app
 ## npm i
