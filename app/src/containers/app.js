@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 
 import io from 'socket.io-client';
 import L from 'leaflet';
+// const L = window.L
 
 import { connect } from 'react-redux';
 
@@ -21,94 +22,61 @@ class App extends Component {
     this.state = {
       vzdalenost: 0,
       cas: 0,
-      ma: 0,
+      marker: 0,
       cilbod: 0,
       center: 0
     }
   }
   componentDidMount() {
-    // async fetch('http://213.136.78.184:7778/socket.io/?EIO=3&transport=polling&t=MOw5h21&sid=gKsXXthhb7iFuNoBAAAB')
 
-    // const request = async () => {
-    //   const response = await fetch('http://213.136.78.184:7778/socket.io/?EIO=3&transport=polling&t=MOw5h21&sid=gKsXXthhb7iFuNoBAAAB');
-    //   const json = await response.json();
-    //   console.log('json', json);
-    // }
-    //
-    // request();
-
-
-    // axios.get('http://213.136.78.184:7778/socket.io/?EIO=3&transport=polling&t=MOw5h21&sid=gKsXXthhb7iFuNoBAAAB')
-    //   .then(response => {
-    //     console.log('response', response);
-    //   })
-    //   .catch(err => {
-    //     console.log('err', err);
-    //   })
-
-    // const socket = io('http://213.136.78.184:7778/socket.io/?EIO=3&transport=polling&t=MOw5h21&sid=gKsXXthhb7iFuNoBAAAB');
     this.socket = io('https://api.singlecube.cz:7778');
 
     let vzdalenost,
         cas,
-        ma,
+        marker,
         cilbod,
         center
 
     this.socket.on('traindata', data => {
       vzdalenost=parseFloat(data.speed)
       cas=parseFloat(data.timeMillis)
-      ma=L.latLng(parseFloat(data.lat),parseFloat(data.long))
-      if (ma!=null){
-        cilbod=ma
+      marker=L.latLng(parseFloat(data.lat),parseFloat(data.long))
+      if (marker!=null){
+        cilbod=marker
         center=[parseFloat(data.lat),parseFloat(data.long)]
       }
 
       this.setState({
         vzdalenost,
         cas,
-        ma,
+        marker,
         cilbod,
         center
       })
     })
-
-
-    // console.log(socket);
-
-    // server-side
-    // const io = require('socket.io')();
-
-    // middleware
-    // io.use((socket, next) => {
-    //   let token = socket.handshake.query.token;
-    //   if (isValid(token)) {
-    //     return next();
-    //   }
-    //   return next(new Error('authentication error'));
-    // });
-
-    // then
-    // io.on('connection', (socket) => {
-    //   let token = socket.handshake.query.token;
-    //   // ...
-    // });
   }
 
-  restart = e => {
-    this.socket.emit('simulace_start', "")
-  }
+  // restart = e => {
+  //   this.socket.emit('simulace_start', "")
+  // }
 
   render() {
-    const {vzdalenost, cas, ma, cilbod, center} = this.state
-    // console.log('vzdalenost, cas, ma, cilbod, center', vzdalenost, cas, ma, cilbod, center);
-    console.log(this.socket);
+    const {vzdalenost, cas, marker, cilbod, center} = this.state
+    // console.log('vzdalenost, cas, marker, cilbod, center', vzdalenost, cas, marker, cilbod, center);
+    // console.log(this.socket);
     return (
       <div>
-        <div>{vzdalenost, cas, ma, cilbod, center}</div>
-        <button onClick={e => this.restart(e)}>Restart</button>
+        <div>{vzdalenost, cas, marker, cilbod, center}</div>
+        {/* <button onClick={e => this.restart(e)}>Restart</button> */}
          {/* <div id="mapid"></div> */}
-         <MapComponent />
+         <MapComponent
+            vzdalenost={vzdalenost}
+            cas={cas}
+            marker={marker}
+            cilbod={cilbod}
+            center={center}
+            zoom="13"
+         />
 	    </div>
     );
   }

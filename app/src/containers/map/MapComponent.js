@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import L from 'leaflet';
+// const L = window.L
+
 // import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
+
 
 class MapComponent extends Component {
   // componentDidMount() {
@@ -58,20 +61,44 @@ class MapComponent extends Component {
   }
 
   componentDidMount() {
-    this.map = L.map('map').setView([51.505, -0.09], 13);
+    const {center, zoom, marker} = this.props
 
-    let tile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    this.map = L.map('map').setView([0, 0], zoom);
+
+    // let tile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    // }).addTo(this.map);
+
+    let tile = L.tileLayer('https://mapserver.mapy.cz/base-m/{z}-{x}-{y}?s=0.2&dm=Luminosity', {
+      attribution: ''
     }).addTo(this.map);
 
-    let marker = L.marker([51.5, -0.09]).addTo(map)
+    var ratIcon = L.icon({
+      iconUrl: 'https://www.google.cz/url?sa=i&source=images&cd=&ved=2ahUKEwiAvJCtgJreAhUL26QKHZMSDYcQjRx6BAgBEAU&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F299087%2Fmap_marker_icon&psig=AOvVaw17lqfq8R5klgcYFeXVHgCy&ust=1540296122341650',
+      iconSize: [60,50]
+    });
+
+    let markerOnMap = L.marker([0, 0], {icon: ratIcon}).addTo(this.map)
       .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
       .openPopup();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+
+      const {center, zoom, marker} = this.props
+
+      console.log(marker);
+
+      this.map.setView(center, zoom);
+      let markerOnMap = L.marker(marker).addTo(this.map)
+  }
+
   render() {
-    console.log('map', this.map);
-    
+    // console.log('map', this.map);
+    // console.log('vzdalenost, cas, marker, cilbod, center, zoom', vzdalenost, cas, marker, cilbod, center, zoom);
+
+    const {vzdalenost, cas, marker, cilbod, center, zoom} = this.props
+
     return (
       <div id="map"></div>
     );
