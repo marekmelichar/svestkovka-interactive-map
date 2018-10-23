@@ -1,0 +1,11 @@
+#interactive_map {
+  height: 500px;
+}
+
+.leaflet-control-zoom-in {
+  display: none !important;
+}
+
+.leaflet-control-zoom-out {
+  display: none !important;
+}
