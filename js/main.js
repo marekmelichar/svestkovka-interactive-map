@@ -1,10 +1,12 @@
-var mymap = L.map('interactive_map').setView([51.505, -0.09], 13);
+const L = window.L
+
+var mymap = L.map('interactive_map').setView([50.502861, 13.639820], 13);
 
 L.tileLayer('https://mapserver.mapy.cz/base-m/{z}-{x}-{y}?s=0.2&dm=Luminosity', {
   attribution: ''
 }).addTo(mymap);
 
-const pointer = L.marker([0,0]).addTo(mymap)
+const pointer = L.marker([50.502861, 13.639820]).addTo(mymap)
 
 const socket = io('https://api.singlecube.cz:7778');
 
@@ -14,7 +16,7 @@ let vzdalenost,
   cilbod,
   center
 
-socket.on('traindata', data => {
+socket.on('traindata', function(data) {
   vzdalenost=parseFloat(data.speed)
   cas=parseFloat(data.timeMillis)
   marker=L.latLng(parseFloat(data.lat),parseFloat(data.long))

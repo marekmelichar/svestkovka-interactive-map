@@ -1,5 +1,6 @@
 #interactive_map {
   height: 500px;
+  pointer-events: none;
 }
 
 .leaflet-control-zoom-in {
@@ -7,5 +8,9 @@
 }
 
 .leaflet-control-zoom-out {
+  display: none !important;
+}
+
+.leaflet-control-attribution {
   display: none !important;
 }
