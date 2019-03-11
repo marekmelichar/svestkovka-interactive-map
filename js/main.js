@@ -24,7 +24,6 @@ let vzdalenost,
   unionArr = [],
   nextUnionArr = [],
   poi,
-  // POI,
   poiStore,
   leafsPoiArr = [],
   counter = 0,
@@ -34,8 +33,6 @@ let vzdalenost,
 
 const eventInit = new Event('init');
 const eventDataUpdated = new Event('dataUpdated');
-// const eventDataUpdated = new CustomEvent('dataUpdated', {});
-// let eventDataUpdated;
 
 
 
@@ -103,7 +100,6 @@ socket.on('traindata', function(data) {
 
   pointer.setLatLng(pointerPosition)
 
-  // nextPOI = data.poi
   poiStore = data.poi
 
   if (counter === 0) {
