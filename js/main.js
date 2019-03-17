@@ -1,6 +1,13 @@
 const L = window.L
 const _ = window._
 
+var mapContainer = $('#interactive_map')
+
+if (mapContainer.length) {
+
+
+
+
 const trainmap = L.map('interactive_map', {
   // dragging: true
 }).setView([50.478378, 13.837630], 11.4);
@@ -245,7 +252,6 @@ const markerOnClick = (e) => {
 
 // create toggle :
 
-var mapContainer = $('#interactive_map')
 
 mapContainer.append(`
   <div class="toggleSizeMap">
@@ -262,3 +268,15 @@ $('.toggleSizeMap').on('click', function(e) {
     $('.toggleSizeMap img').attr('src', '/wp-content/plugins/Svestkovka-mapa/style/images/map_open.svg')
   }
 })
+
+
+
+
+
+
+
+
+
+
+
+}
