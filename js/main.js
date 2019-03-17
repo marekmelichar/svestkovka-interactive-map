@@ -10,6 +10,7 @@ L.tileLayer('https://mapserver.mapy.cz/base-m/{z}-{x}-{y}?s=0.2&dm=Luminosity', 
 }).addTo(trainmap);
 
 const pointer = L.marker([50.502861, 13.639820]).addTo(trainmap)
+// const markerGroup = L.layerGroup().addTo(trainmap);
 
 const socket = io('https://api.singlecube.cz:7778');
 
@@ -24,6 +25,7 @@ let vzdalenost,
   unionArr = [],
   nextUnionArr = [],
   poi,
+  // POI,
   poiStore,
   leafsPoiArr = [],
   counter = 0,
@@ -33,6 +35,8 @@ let vzdalenost,
 
 const eventInit = new Event('init');
 const eventDataUpdated = new Event('dataUpdated');
+// const eventDataUpdated = new CustomEvent('dataUpdated', {});
+// let eventDataUpdated;
 
 
 
@@ -44,10 +48,14 @@ const myIcon = L.icon({
   iconUrl: '/marker_icon/map_pin_zvyrazeny.svg',
   iconSize: [25, 50],
   iconAnchor: [22, 94],
-  popupAnchor: [-3, -76]
+  popupAnchor: [-3, -76],
+  // shadowUrl: 'my-icon-shadow.png',
+  // shadowSize: [68, 95],
+  // shadowAnchor: [22, 94]
 });
 
 var customOptions = {
+  // 'maxWidth': '700',
   'className' : 'customPopup'
 }
 
@@ -86,12 +94,15 @@ function poiDiv(itm) {
 
 socket.on('traindata', function(data) {
 
+  // console.log('data', data);
+
   vzdalenost=parseFloat(data.speed)
   cas=parseFloat(data.timeMillis)
 
   getLatLng=L.latLng(parseFloat(data.lat),parseFloat(data.long))
 
   if (getLatLng!=null){
+    // cilbod=marker
     pointerPosition=[parseFloat(data.lat),parseFloat(data.long)]
   }
 
@@ -100,8 +111,11 @@ socket.on('traindata', function(data) {
 
   pointer.setLatLng(pointerPosition)
 
+  // nextPOI = data.poi
   poiStore = data.poi
 
+  // eventDataUpdated = new CustomEvent('dataUpdated', {detail: data});
+  // console.log(counter);
   if (counter === 0) {
     window.dispatchEvent(eventInit);
   }
@@ -118,7 +132,11 @@ socket.on('traindata', function(data) {
 
 window.addEventListener('init', function (e) {
 
+  // console.log('Init');
+  // console.log(poiStore);
+
   poiStore.map((itm, i) => {
+    // console.log(itm);
     leafsPoiArr[i] = L.marker([itm.lat, itm.lan], {
         icon: myIcon,
 	      title: 'marker',
@@ -142,7 +160,13 @@ window.addEventListener('init', function (e) {
 
 window.addEventListener('dataUpdated', function (e) {
 
+  // console.log('leafsPoiArr', leafsPoiArr);
+  // console.log('alreadyOnMap', alreadyOnMap);
+  // console.log('currentPOIs', currentPOIs);
+
   someNew = _.differenceBy(currentPOIs, alreadyOnMap, '_id')
+
+  // console.log('someNew', someNew);
 
   if (someNew) {
     someNew.map((itm, i) => {
@@ -161,3 +185,28 @@ window.addEventListener('dataUpdated', function (e) {
   currentPOIs = poiStore
 
 }, false);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const markerOnClick = (e) => {
+  // console.log("hi. you clicked the marker at " + this.getLatLng());
+  // console.log('EEE', JSON.stringify(e, null, 4));
+  console.log('e', e);
+  console.log("hi. you clicked the marker at " + e.latlng);
+  console.log("title of marker: " + e.title);
+  console.log("name: " + e.name);
+}
