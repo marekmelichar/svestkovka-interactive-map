@@ -9,7 +9,17 @@ L.tileLayer('https://mapserver.mapy.cz/base-m/{z}-{x}-{y}?s=0.2&dm=Luminosity', 
   attribution: ''
 }).addTo(trainmap);
 
-const pointer = L.marker([50.502861, 13.639820]).addTo(trainmap)
+const customMainPin = L.icon({
+  iconUrl: '/wp-content/plugins/Svestkovka-mapa/style/images/pin_train.svg',
+  iconSize: [70, 70],
+  iconAnchor: [34, 55],
+});
+
+var customOptions = {
+  'className' : 'customMainPin'
+}
+
+const pointer = L.marker([50.502861, 13.639820], {icon: customMainPin}).addTo(trainmap)
 // const markerGroup = L.layerGroup().addTo(trainmap);
 
 const socket = io('https://api.singlecube.cz:7778');
@@ -45,9 +55,10 @@ const eventDataUpdated = new Event('dataUpdated');
 
 
 const myIcon = L.icon({
-  iconUrl: '/marker_icon/map_pin_zvyrazeny.svg',
-  iconSize: [25, 50],
-  iconAnchor: [22, 94],
+  // iconUrl: '/marker_icon/map_pin_zvyrazeny.svg',
+  iconUrl: '/wp-content/plugins/Svestkovka-mapa/style/images/pin_basic.svg',
+  iconSize: [30, 30],
+  iconAnchor: [15, 15],
   popupAnchor: [-3, -76],
   // shadowUrl: 'my-icon-shadow.png',
   // shadowSize: [68, 95],
@@ -58,6 +69,16 @@ var customOptions = {
   // 'maxWidth': '700',
   'className' : 'customPopup'
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -205,8 +226,39 @@ window.addEventListener('dataUpdated', function (e) {
 const markerOnClick = (e) => {
   // console.log("hi. you clicked the marker at " + this.getLatLng());
   // console.log('EEE', JSON.stringify(e, null, 4));
-  console.log('e', e);
-  console.log("hi. you clicked the marker at " + e.latlng);
-  console.log("title of marker: " + e.title);
-  console.log("name: " + e.name);
+  // console.log('e', e);
+  // console.log("hi. you clicked the marker at " + e.latlng);
+  // console.log("title of marker: " + e.title);
+  // console.log("name: " + e.name);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// create toggle :
+
+var mapContainer = $('#interactive_map')
+
+mapContainer.append(`
+  <div class="toggleSizeMap">
+    <img src="/wp-content/plugins/Svestkovka-mapa/style/images/map_open.svg" />
+  </div>
+`)
+
+$('.toggleSizeMap').on('click', function(e) {
+  mapContainer.toggleClass('open')
+
+  if (mapContainer.hasClass('open')) {
+    $('.toggleSizeMap img').attr('src', '/wp-content/plugins/Svestkovka-mapa/style/images/map_close.svg')
+  } else {
+    $('.toggleSizeMap img').attr('src', '/wp-content/plugins/Svestkovka-mapa/style/images/map_open.svg')
+  }
+})
