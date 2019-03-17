@@ -18,15 +18,15 @@ function default_calculator_scripts()
   // JS
 
   wp_register_script( 'lodash-js', plugins_url( '../js/lodash.js', __FILE__ ) );
-  wp_enqueue_script( 'lodash-js' );
+  wp_enqueue_script( 'lodash-js', '', '', false, true );
 
   // wp_register_script( 'leaflet-js', 'https://unpkg.com/leaflet@1.3.4/dist/leaflet.js', null, null, true );
   wp_register_script( 'leaflet-js', plugins_url( '../js/leaflet.js', __FILE__ ) );
-  wp_enqueue_script( 'leaflet-js' );
+  wp_enqueue_script( 'leaflet-js', '', '', false, true );
 
   // wp_register_script( 'socket-js', 'https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js' );
   wp_register_script( 'socket-js', plugins_url( '../js/socket.io.js', __FILE__ ) );
-  wp_enqueue_script( 'socket-js' );
+  wp_enqueue_script( 'socket-js', '', '', false, true );
 
   // wp_register_script( 'interactive_map-js', plugins_url( '../app/scripts/main.js', __FILE__ ) );
   wp_register_script( 'interactive_map-js', plugins_url( '../js/main.js', __FILE__ ) );
