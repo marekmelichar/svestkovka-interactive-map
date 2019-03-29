@@ -1,0 +1,25 @@
+{
+  "name": "svestkovka-interactive-map",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node_modules/.bin/babel src/main.js --out-file js/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marekmelichar/svestkovka-interactive-map.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marekmelichar/svestkovka-interactive-map/issues"
+  },
+  "homepage": "https://github.com/marekmelichar/svestkovka-interactive-map#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  }
+}
